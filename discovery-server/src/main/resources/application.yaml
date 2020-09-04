@@ -1,0 +1,13 @@
+spring:
+  application: 
+    name: discovery-server
+    
+    
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    
+    
+server: 
+  port: 8761

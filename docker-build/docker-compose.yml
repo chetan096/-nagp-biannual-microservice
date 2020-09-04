@@ -1,0 +1,42 @@
+version: '3.0'
+services:
+  discovery-server:
+    image: '3147181/nes-discovery-server:biannual-exam'
+    ports:
+    - "8761:8761" 
+  api-gateway:
+    image: '3147181/nes-api-gateway:biannual-exam'
+    ports:
+    - "8081:8081"
+    environment:
+    - EUREKA_SERVER_HOST=discovery-server
+    - EUREKA_SERVER_PORT=8761
+    depends_on:
+    - discovery-server   
+  driver-inventory:
+    image: '3147181/nes-order:biannual-exam'
+    ports:
+    - "8082:8082"
+    environment:
+    - EUREKA_SERVER_HOST=discovery-server
+    - EUREKA_SERVER_PORT=8761
+    depends_on:
+    - discovery-server
+  ride:
+    image: '3147181/nes-user:biannual-exam'
+    ports:
+    - "8083:8083"
+    environment:
+    - EUREKA_SERVER_HOST=discovery-server
+    - EUREKA_SERVER_PORT=8761
+    depends_on:
+    - discovery-server
+  notification:
+    image: '3147181/nes-payment:biannual-exam'
+    ports:
+    - "8084:8084"
+    environment:
+    - EUREKA_SERVER_HOST=discovery-server
+    - EUREKA_SERVER_PORT=8761
+    depends_on:
+    - discovery-server
